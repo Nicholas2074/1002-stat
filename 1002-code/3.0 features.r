@@ -232,7 +232,7 @@ varsDf <- merge(featureDel, trajGroup, by = "icuid", all.y = TRUE)
 print(length(unique(varsDf$icuid)))
 print(length(unique(trajGroup$icuid)))
 print(length(unique(featureDel$icuid)))
-dim(varsDf)
+
 any(duplicated(trajGroup$icuid))
 any(duplicated(featureDel$icuid))
 
@@ -271,3 +271,59 @@ dim(varsDf)
 dim(varsImp)
 
 # //!SECTION
+
+# //SECTION - icd code
+
+# //ANCHOR - import
+
+# mimic
+michid <- read.csv("D:/Hai/321-stat/1002-stat/1002-oridata/michid_0.csv", header = TRUE)
+
+michid0 <- as.data.frame(michid[, 3])
+names(michid0)[1] <- c("icuid")
+
+msahid <- read.csv("D:/Hai/321-stat/1002-stat/1002-oridata/msahid_0.csv", header = TRUE)
+
+msahid0 <- as.data.frame(msahid[, 3])
+names(msahid0)[1] <- c("icuid")
+
+mtbiid <- read.csv("D:/Hai/321-stat/1002-stat/1002-oridata/mtbiid_0.csv", header = TRUE)
+
+mtbiid0 <- as.data.frame(mtbiid[, 3])
+names(mtbiid0)[1] <- c("icuid")
+
+# eicu
+eichid <- read.csv("D:/Hai/321-stat/1002-stat/1002-oridata/eichid_0.csv", header = TRUE)
+
+eichid0 <- eichid
+names(eichid0)[1] <- c("icuid")
+
+esahid <- read.csv("D:/Hai/321-stat/1002-stat/1002-oridata/esahid_0.csv", header = TRUE)
+
+esahid0 <- esahid
+names(esahid0)[1] <- c("icuid")
+
+etbiid <- read.csv("D:/Hai/321-stat/1002-stat/1002-oridata/etbiid_0.csv", header = TRUE)
+
+etbiid0 <- etbiid
+names(etbiid0)[1] <- c("icuid")
+
+# merge
+ichid <- rbind(eichid0, michid0)
+sahid <- rbind(esahid0, msahid0)
+tbiid <- rbind(etbiid0, mtbiid0)
+
+# //ANCHOR - icdcode
+varsImpICD <- varsImp %>% 
+  mutate(
+    icd = case_when(
+      icuid %in% ichid$icuid ~ 1,
+      icuid %in% sahid$icuid ~ 2,
+      TRUE ~ 3
+    ),
+    icd = factor(
+      icd,
+      levels = c(1, 2, 3),
+      labels = c("ICH", "SAH", "TBI")
+    )
+  )

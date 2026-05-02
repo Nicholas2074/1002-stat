@@ -1,6 +1,6 @@
 # //SECTION - multiglm
 
-df1 <- merge(varsImp, mortality, by = "icuid", all.x = TRUE)
+df1 <- merge(varsImpICD, mortality, by = "icuid", all.x = TRUE)
 df2 <- merge(df1, gcs[, c(1, 3)], by = "icuid", all.x = TRUE)
 df3 <- merge(df2, gcs[, c(1, 4)], by = "icuid", all.x = TRUE)
 
@@ -18,10 +18,12 @@ dfSubGroup <- df3[, c(
     "cerebrovascular_disease",
     "diabetes",
     "craniotomy",
-    "ventriculostomy"
+    "ventriculostomy",
+    "icd"
 )]
 
 subVars <- c(
+    "icd",
     "age",
     "gender",
     "bmi",
@@ -132,7 +134,7 @@ jsMor <- jsMor[, c(
 jsMor[, 3:5] <- lapply(jsMor[, 3:5], as.numeric)
 
 jsMor <- jsMor %>% 
-    mutate("OR(95%CI)" = paste(OR, "(", Lower, ",", Upper, ")"), )
+    mutate("OR(95%CI)" = paste(OR, "(", Lower, ",", Upper, ")"))
 
 jsMor$" " <- paste(rep(" ", nrow(jsMor)), collapse = " ")
 
@@ -160,7 +162,7 @@ jsDis <- jsDis[, c(
 jsDis[, 3:5] <- lapply(jsDis[, 3:5], as.numeric)
 
 jsDis <- jsDis %>% 
-    mutate("OR(95%CI)" = paste(OR, "(", Lower, ",", Upper, ")"), )
+    mutate("OR(95%CI)" = paste(OR, "(", Lower, ",", Upper, ")"))
 
 jsDis$" " <- paste(rep(" ", nrow(jsDis)), collapse = " ")
 
@@ -188,7 +190,7 @@ jsDev <- jsDev[, c(
 jsDev[, 3:5] <- lapply(jsDev[, 3:5], as.numeric)
 
 jsDev <- jsDev %>% 
-    mutate("OR(95%CI)" = paste(OR, "(", Lower, ",", Upper, ")"), )
+    mutate("OR(95%CI)" = paste(OR, "(", Lower, ",", Upper, ")"))
 
 jsDev$" " <- paste(rep(" ", nrow(jsDev)), collapse = " ")
 
@@ -214,6 +216,7 @@ jsAll <- jsAll %>%
         "diabetes" = "Diabetes",
         "craniotomy" = "Craniotomy",
         "ventriculostomy" = "Ventriculostomy",
+        "icd" = "Diagnosis",
         .default = Variable1
     ))
 
