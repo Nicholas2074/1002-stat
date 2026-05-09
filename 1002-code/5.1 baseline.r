@@ -1,7 +1,7 @@
 # //ANCHOR - preprocess
 
 # including patient, score, diagnosis, surgery, group, day1vital
-baselineGroup <- varsImp[, c(1:28, 29:48, 77)]
+baselineGroup <- varsImpICD[, c(1:28, 29:48, 77:78)]
 
 # do not run!!!
 baselineGroup$race <- as.numeric(baselineGroup$race)
@@ -15,9 +15,9 @@ tableGroup <- descrTable(group ~ . - icuid,
     method = NA,
     show.all = TRUE
 )
-# tableGroup
+tableGroup
 
-export2word(tableGroup, file = "tableGroup.docx")
+# export2word(tableGroup, file = "tableGroup.docx")
 
 # //ANCHOR - mortality
 
@@ -30,6 +30,6 @@ tableMor <- descrTable(hospMortality ~ . - icuid,
     method = NA,
     show.all = TRUE
 )
-# tableMor
+tableMor
 
-export2word(tableMor, file = "tableMor.docx")
+# export2word(tableMor, file = "tableMor.docx")

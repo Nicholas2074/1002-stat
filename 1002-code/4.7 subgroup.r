@@ -1,5 +1,7 @@
 # //SECTION - multiglm
 
+library(tidyverse)
+
 df1 <- merge(varsImpICD, mortality, by = "icuid", all.x = TRUE)
 df2 <- merge(df1, gcs[, c(1, 3)], by = "icuid", all.x = TRUE)
 df3 <- merge(df2, gcs[, c(1, 4)], by = "icuid", all.x = TRUE)

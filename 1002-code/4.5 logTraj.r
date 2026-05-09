@@ -1,3 +1,11 @@
+# //ANCHOR - data
+
+dfTrajMor <- dfMor %>% mutate(group = as.factor(group))
+
+dfTrajDis <- dfDis %>% mutate(group = as.factor(group))
+
+dfTrajDev <- dfDev %>% mutate(group = as.factor(group))
+
 # //SECTION - logcurde
 
 # //SECTION - glm
@@ -149,8 +157,10 @@ resAll0$" " <- paste(rep("NA", nrow(resAll0)))
 
 resAll0 <- resAll0 %>%
     mutate(Variable1 = recode(Variable1,
-        "groupGroup 2" = "Group 2",
-        "groupGroup 3" = "Group 3",
+        "group2" = "Group 2",
+        "group3" = "Group 3",
+        "group4" = "Group 4",
+        "group5" = "Group 5",
         .default = Variable1
     ))
 
@@ -388,8 +398,10 @@ resAll1$" " <- paste(rep("NA", nrow(resAll1)))
 
 resAll1 <- resAll1 %>%
     mutate(Variable1 = recode(Variable1,
-        "groupGroup 2" = "Group 2",
-        "groupGroup 3" = "Group 3",
+        "group2" = "Group 2",
+        "group3" = "Group 3",
+        "group4" = "Group 4",
+        "group5" = "Group 5",
         "age" = "Age",
         "gender" = "Gender",
         "bmi" = "BMI",
@@ -420,6 +432,7 @@ dfCovMor2 <- dfTrajMor[, c(
     "age", 
     "gender", 
     "bmi", 
+    "gcs", 
     "hypertension", 
     "cerebrovascular_disease"
     )]
@@ -434,6 +447,7 @@ dfCovDis2 <- dfTrajDis[, c(
     "age", 
     "gender", 
     "bmi", 
+    "gcs", 
     "hypertension", 
     "cerebrovascular_disease"
     )]
@@ -448,6 +462,7 @@ dfCovDev2 <- dfTrajDev[, c(
     "age", 
     "gender", 
     "bmi", 
+    "gcs", 
     "hypertension", 
     "cerebrovascular_disease"
     )]
@@ -467,6 +482,7 @@ logMorAdjusted2 <- glm(
         age +
         gender +
         bmi +
+        gcs +
         hypertension + 
         cerebrovascular_disease,
     family = binomial,
@@ -496,6 +512,7 @@ logDisAdjusted2 <- glm(
         age +
         gender +
         bmi +
+        gcs +
         hypertension + 
         cerebrovascular_disease,
     family = binomial,
@@ -525,6 +542,7 @@ logDevAdjusted2 <- glm(
         age +
         gender +
         bmi +
+        gcs +
         hypertension + 
         cerebrovascular_disease,
     family = binomial,
@@ -644,11 +662,14 @@ resAll2$" " <- paste(rep("NA", nrow(resAll2)))
 
 resAll2 <- resAll2 %>%
     mutate(Variable1 = recode(Variable1,
-        "groupGroup 2" = "Group 2",
-        "groupGroup 3" = "Group 3",
+        "group2" = "Group 2",
+        "group3" = "Group 3",
+        "group4" = "Group 4",
+        "group5" = "Group 5",
         "age" = "Age",
         "gender" = "Gender",
         "bmi" = "BMI",
+        "gcs" = "GCS",
         "hypertension" = "Hypertension",
         "cerebrovascular_disease" = "Cerebrovascular disease",
         .default = Variable1
@@ -684,8 +705,8 @@ resForestCo <- forest(
         resAllCo$OR3
     ),
     ci_column = c(3, 7, 11),
-    ref_line = 1
-    # xlim = c(0, 10)
+    ref_line = 1,
+    xlim = c(0, 10)
 )
 
 # Insert text at the top
@@ -701,7 +722,7 @@ resForestCo <- insert_text(resForestCo,
 
 resForestCo <- insert_text(resForestCo,
     text = c("Crude model", "Adjusted model 1", "Adjusted model 2"),
-    row = c(1, 3, 8),
+    row = c(1, 5, 12),
     col = 1,
     part = "body",
     just = "left",

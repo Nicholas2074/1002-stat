@@ -145,8 +145,16 @@ hResAllCrude <- cbind(hResMorCrude, hResDisCrude, hResDevCrude)
 
 hResAllCrude$" " <- paste(rep("NA", nrow(hResAllCrude)))
 
-dim(hResAllCrude)
-hResAllCrude[, 1]
+hResAllCrude <- hResAllCrude %>%
+    mutate(Variable1 = recode(Variable1,
+        "group2" = "Group 2",
+        "group3" = "Group 3",
+        "group4" = "Group 4",
+        "group5" = "Group 5",
+        .default = Variable1
+    ))
+
+hResAllCrude <- hResAllCrude[-1, ]
 
 # //ANCHOR - plot
 

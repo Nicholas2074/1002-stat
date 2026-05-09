@@ -203,6 +203,8 @@ names(hmortality) <- c("icuid", "hospMortality")
 
 hmortality$hospMortality[is.na(hmortality$hospMortality)] <- 0
 
+hmortality <- hmortality %>% distinct(icuid,.keep_all = TRUE)
+
 # //ANCHOR - gcs
 
 hgcs <- read.csv("D:/Hai/321-stat/1002-stat/1002-oridata/hdev_gcs.csv", header = TRUE)

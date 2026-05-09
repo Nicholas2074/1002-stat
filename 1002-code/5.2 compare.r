@@ -27,7 +27,7 @@ compareGroupDay1 <- icpBpHr2 %>%
         .groups = "drop"
     )
 
-# including patient, score, diagnosis, surgery, day1vital, chemistry group
+# link predictors, group
 compareGroupDay1 <- merge(compareGroupDay1, varsImp[, c(1, 31, 67, 69, 71, 77)], by = "icuid", all.y = TRUE)
 
 # //ANCHOR - comparegroups
@@ -134,6 +134,7 @@ compareGroupDay5 <- icpBpHr2 %>%
         .groups = "drop"
     )
 
+# link group
 compareGroupDay5 <- merge(compareGroupDay5, varsImp[, c(1, 77)], by = "icuid", all.y = TRUE)
 
 # //ANCHOR - comparegroups

@@ -170,6 +170,22 @@ print(sum(unique(avgDf$icuid) %in% micp$icuid))
 
 # //ANCHOR - imputation
 
+# install.packages("VIM")
+
+library(VIM)
+
+aggrPre <- aggr(avgDf[, c("icp", "isbp", "idbp", "hr")])
+
+# install.packages("naniar")
+
+library(naniar)
+
+gg_miss_var(avgDf[, c("icp", "isbp", "idbp", "hr")])
+
+round(colMeans(is.na(avgDf[, c("icp", "isbp", "idbp", "hr")])), 2)
+
+summary(avgDf)
+
 library(missForest)
 
 set.seed(0)
